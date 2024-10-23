@@ -22,14 +22,32 @@
 [Level 9 -> Level 10](#natas-level-9---10)
 
 ## Natas Level 0 -> 1
-Pretty straightforward - I found the password by right clicking to view the source.
+Pretty straightforward - I found the password by right-clicking to view the source, which contained the commented-out password.
+
+(natas0.png)
+
 Password: 0nzCigAq7t2iALyvU9xcHlYN4MlkIwlq 
 
 ## Natas Level 1 -> 2
-Although right clicking was disabled, I was still able to view the source using the keyboard shortcut <kbd>Ctrl + Shift + C</kbd>
+Although right clicking was disabled, I could view the source using the keyboard shortcut  <kbd>Ctrl + Shift + C</kbd>, which contained the commented-out password in the index file.
+
+(natas1.png)
+
 Password: TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI 
 
 ## Natas Level 2 -> 3
+When inspecting the source, I found a folder labelled /file. I then attempted to access the webroot of the challenge website, and viewed the /file folder in the webroot. As shown below, it contained two files, pixel.png and users.txt. 
+
+(natas_2.png)
+
+The users.txt file contained the password for the next level, natas3. 
+
+Password: 3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH
+
+(natas_2_password.png)
+
+
+
 
 
 ## Natas Level 3 -> 4
