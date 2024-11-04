@@ -1,40 +1,35 @@
 import base64
 import json
 
-def decrypt_xor(plain, cipher):
-    secret_key = ""
-
-    for x in range(len(plain)):
-        secret_key += str(chr(cipher[x] ^ plain[x % len(plain)]))
-
-    return secret_key
-
 def encrypt_xor(key, cookie):
     data = ""
-    for x in range(len(cookie)):
-        data += chr(cookie[x] ^ key[x % len(key)])   
+    for x in range(len(key)):
+        data += str(chr(cookie[x] ^ key[x % len(key)]))
 
-    data = base64.encodebytes(data.encode('utf-8')).decode().strip()  
+    data = base64.encodebytes(data.encode('utf-8'))
     return data
 
+def decrypt_xor(plaintext, ciphertext):
+    key = ""
+
+    for x in range(len(plaintext)):
+        key += str(chr(ciphertext[x] ^ plaintext[x % len(plaintext)]))
+
+    return key
+
 if __name__ == "__main__":
-    cipher = b"HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GJTYOBCU2TRg="
-    cipher = base64.decodebytes(cipher)
+    ciphertext = b"HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GJTYOBCU2TRg="
+    ciphertext = base64.decodebytes(ciphertext)
+    plaintext = {"showpassword":"no", "bgcolor":"#aaaaaa"}
 
-    plain = {"showpassword": "no", "bgcolour": "#aaaaaa"}
-    plain = json.dumps(plain).encode('utf-8').replace(b" ", b"")
+    # Format JSON by removing space
+    plaintext = json.dumps(plaintext).encode('utf-8').replace(b" ", b"")
 
-    secret_key = decrypt_xor(cipher, plain)
-    print(secret_key)
-    # Secret Key = eDWoeDWoeDWoeDWoeDWoeDWoeDWob¶Owd♠WoeDW
+    key = decrypt_xor(ciphertext, plaintext)
+    print(key)
 
-    # Added another byte by adding "o" at the end to indicate "yes"
-    # secret_key = "eDWoeDWoeDWoeDWoeDWoeDWoeDWob¶Owd♠WoeDWo"
-    
-    # Format new cookie data as JSON string
-    new_cookie = {"showpassword": "yes", "bgcolour": "#aaaaaa"}
+    key = b"eDWoeDWoeDWoeDWoeDWoeDWoeDWoeDWoeDWoeDWoeD"
+    new_cookie = {"showpassword":"yes", "bgcolor":"#aaaaaa"}
     new_cookie = json.dumps(new_cookie).encode('utf-8').replace(b" ", b"")
-
-    # Encode secret key
-    data = encrypt_xor(secret_key.encode('utf-8'), new_cookie)  
+    data = encrypt_xor(key, new_cookie)
     print(data)
